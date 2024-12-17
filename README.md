@@ -1,91 +1,103 @@
 
-
 # 🌾 **KrishiFarm**  
-### *"A revolutionary platform empowering farmers to sell their produce directly, negotiate prices, and eliminate middlemen."*
+### *"Empowering farmers and buyers with a direct marketplace to simplify transactions, negotiate prices, and enhance agricultural efficiency."*
 
 ---
 
-## 🚀 **About the Project**
-KrishiFarm is more than just an app — it’s a digital **farm-to-market bridge** built to revolutionize the agricultural ecosystem.  
-Designed for farmers and consumers alike, it empowers **direct produce sales** while integrating innovative tools like AI-powered chatbots and real-time price negotiation.  
+## 🚀 **About the Project**  
+KrishiFarm is a complete **end-to-end agricultural solution** for both **farmers** and **buyers**. This platform ensures seamless communication, direct market access, smart price negotiations, and AI-driven voice automation.  
+
+---
+
+## 📌 **Main Modules**  
+1. **Farmer Side**: List crops, manage produce, track orders, use AI assistance, and voice automation.  
+2. **Buyer Side**: Browse products, negotiate prices, finalize purchases, and interact using voice features.
 
 ---
 
 ## ✨ **Key Features**  
-- **Sell Produce Directly** 🛒  
-  Farmers can upload their crops with ease, removing intermediaries for better profits.
 
-- **AI Assistant 🤖**  
-  Integrated AI chatbot helps farmers with queries, market trends, and crop suggestions.
+### 🎯 **Farmer Side**  
+- **Crop Management**: Upload, edit, and remove crops with ease.  
+- **AI Assistant 🤖**: Provides market trends, crop suggestions, and answers farmer queries.  
+- **Voice Automation 🎙️**: Use **voice commands** to add crops, navigate the app, and manage orders.  
+- **Price Negotiation 💬**: Engage in real-time price discussions with buyers.  
+- **Order Tracking 📦**: View and manage incoming orders.  
 
-- **Price Negotiation 💬**  
-  Buyers and farmers can negotiate in real-time to strike the best deal.
-
-- **Product Management** 📋  
-  Effortlessly manage crop listings, orders, and transactions.
-
----
-
-## 📸 **Screenshots**
-
-### **1. Home Screen**  
-The entry point for farmers and buyers:  
-![Home Screen](https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/home_farmer.jpeg)
-
-### **2. Add Crop**  
-Upload your produce easily:  
-![Add Crop](https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/add%20crop.jpeg)
-
-### **3. Price Negotiation**  
-Discuss and finalize prices:  
-![Price Negotiation](https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/price%20negotiation.jpeg)
-
-### **4. Product Details**  
-Detailed view for all listed products:  
-![Product Details](https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/product%20detail.jpeg)
-
-### **5. Orders Section**  
-Track orders seamlessly:  
-![Orders Section](https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/orders.jpeg)
-
-### **6. AI Assistant**  
-Smart chatbot for farmer assistance:  
-![AI Assistant](https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/ai%20assistant.jpeg)
+### 🛒 **Buyer Side**  
+- **Browse Produce**: Explore detailed product listings with images, descriptions, and pricing.  
+- **Negotiate Prices 💬**: Communicate with farmers to finalize rates.  
+- **Order Management**: Seamlessly track placed orders.  
+- **Voice Commands 🎙️**: Use voice features to navigate, search, and place orders.  
 
 ---
 
-## 🛠️ **Tech Stack**
+### 📸 **Screenshots & Features**  
+
+1. **Home Screen**  
+- Central dashboard with navigation options.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/home_farmer.jpeg" width="400" alt="Home Screen">  
+
+2. **Add Crop**  
+- Upload crop details with images for listing.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/add%20crop.jpeg" width="400" alt="Add Crop">  
+
+3. **Product Listings**  
+- View and manage all listed crops and products.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/uploadp.jpeg" width="400" alt="Crop List">  
+
+4. **My Products**  
+- Farmers can manage their produce, update information, or remove items.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/myPro.jpeg" width="400" alt="My Products">  
+
+5. **Product Details**  
+- Detailed crop information including pricing and availability.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/product%20detail.jpeg" width="400" alt="Product Details">  
+
+6. **Cart Section**  
+- Buyers can add products to the cart before confirming orders.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/cart.jpeg" width="400" alt="Cart">  
+
+7. **Price Negotiation**  
+- Real-time price discussions between farmers and buyers.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/price%20negotiation.jpeg" width="400" alt="Price Negotiation">  
+
+8. **Orders Management**  
+- Farmers and buyers can track and manage all orders.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/orders.jpeg" width="400" alt="Orders">  
+
+9. **AI Assistant**  
+- Voice-powered AI assistant for farming tips, suggestions, and guidance.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/ai%20assistant.jpeg" width="400" alt="AI Assistant">  
+
+10. **Resource Management**  
+- Additional tools and resources available for users.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/resorce.jpeg" width="400" alt="Resource Section">  
+
+11. **Voice Automation**  
+- Hands-free management of products, orders, and navigation using voice commands.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/home_farmer.jpeg" width="400" alt="Voice Automation">  
+
+- **Sign In**: Log in with registered credentials.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/sign_in.png" width="400" alt="Sign In">  
+- **Sign Up**: Create a new account with ease.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/sign_up.png" width="400" alt="Sign Up">  
+- **Change Email**: Update registered email details.  
+  <img src="https://raw.githubusercontent.com/BytesBrawler/krishifarm/main/images/change_email.png" width="400" alt="Change Email">  
+
+---
+
+## 🛠️ **Tech Stack**  
 - **Frontend**: Flutter  
-- **Backend**: Node.js, Express.js  
-- **Database**: MongoDB  
-- **AI Integration**: Chatbot for automated help  
+- **Backend**: firebase , NodeJS(for interacting with Open AI and Ai Models)
+- **Database**: Firebase.
+- **AI Integration**: ChatGPT-powered chatbot  
+- **Voice Automation**: Google Speech-to-Text and Text-to-Speech APIs  
+- **State Management**: Provider  
 
 ---
 
-## 📂 **Project Structure**  
-```
-krishifarm/
-│
-├── android/             # Flutter Android config
-├── assets/              # App assets
-├── images/              # App screenshots and visuals
-│   ├── add crop.jpeg
-│   ├── price negotiation.jpeg
-│   ├── ...
-│
-├── lib/                 # Main Flutter app code
-│   ├── models/          # Data models
-│   ├── views/           # UI screens
-│   ├── controllers/     # State management
-│   ├── utils/           # Helpers and services
-│
-├── README.md            # Project documentation
-└── ...
-```
-
----
-
-## 🌐 **How to Run Locally**
+## 🌐 **How to Run Locally**  
 1. Clone the repository:  
    ```bash
    git clone https://github.com/BytesBrawler/krishifarm.git
@@ -104,37 +116,21 @@ krishifarm/
 
 ---
 
-## 🤝 **Contributing**  
-Contributions are welcome! Please follow these steps:  
-1. Fork the repository.  
-2. Create a new branch:  
-   ```bash
-   git checkout -b feature/YourFeatureName
-   ```
-3. Commit your changes and push to the branch.  
-4. Submit a pull request.  
-
----
-
 ## 🧑‍💻 **Developers**  
-- **Mohammed Imran** - Project Lead  
-- **Team Members**: D, R, I, Y  
+- **Mohammed Imran** - 
+
 
 ---
 
 ## 📧 **Contact**  
 For queries, suggestions, or collaborations:  
-📩 **mohammedimran.in**  
+📩 **[mohammedimran.in](mailto:imranchopdar13@gmail.com)**  
 
 ---
 
-🎉 **Let’s revolutionize farming together!** 🌾🚜  
+🎉 **Together, let's empower farmers and connect markets!** 🌾🚜  
 
 ---
 
-### 📄 License  
+### 📄 **License**  
 This project is licensed under the [MIT License](LICENSE).  
-
----
-
-Let me know if you want additional details added or adjusted! 🚀
