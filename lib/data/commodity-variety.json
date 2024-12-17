@@ -1,0 +1,66 @@
+{
+   
+    "Banana": [
+        "Banana - Ripe",
+        "Desi(Bontha)",
+        "Karpura",
+        "Bhushavali(Pacha)",
+        "Chakkarakeli(Red)",
+        "Amruthapani",
+        "Chakkarakeli(White)"
+    ],
+   
+    "Cauliflower": [
+        "Cauliflower",
+        "African Sarson"
+    ],
+    "Onion": [
+        "1st Sort",
+        "Local",
+        "2nd Sort",
+        "Big",
+        "White"
+    ],
+    "Orange": [
+        "Darjeeling",
+        "Orange"
+    ],
+    "Paddy(Dhan)(Basmati)": [
+        "1121"
+    ],
+    "Paddy(Dhan)(Common)": [
+        "Swarna Masuri (New)",
+        "Paddy",
+        "Sona Mahsuri",
+        "MTU-1010",
+        "1001",
+        "Samba Masuri",
+        "Other",
+        "B P T",
+        "HMT",
+        "I.R. 64",
+        "Hansa",
+        "Sona",
+        "Common",
+        "I.R.-64",
+        "Paddy fine"
+    ],
+    "Potato": [
+        "(Red Nanital)",
+        "Potato",
+        "Local",
+        "Other"
+    ],
+    "Tomato": [
+        "Hybrid",
+        "Local",
+        "Deshi",
+        "Other",
+        "Tomato"
+    ],
+    "Wheat": [
+        "Hybrid",
+        "Local",
+        "147 Average"
+    ]
+}

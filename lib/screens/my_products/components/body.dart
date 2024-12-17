@@ -1,0 +1,319 @@
+import 'dart:async';
+
+import 'package:krishfarm/components/async_progress_dialog.dart';
+import 'package:krishfarm/components/nothingtoshow_container.dart';
+import 'package:krishfarm/components/product_short_detail_card.dart';
+import 'package:krishfarm/constants.dart';
+import 'package:krishfarm/models/Product.dart';
+import 'package:krishfarm/screens/edit_product/edit_product_screen.dart';
+import 'package:krishfarm/screens/product_details/product_details_screen.dart';
+import 'package:krishfarm/services/data_streams/users_products_stream.dart';
+import 'package:krishfarm/services/database/product_database_helper.dart';
+import 'package:krishfarm/services/firestore_files_access/firestore_files_access_service.dart';
+import 'package:krishfarm/size_config.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+
+import '../../../utils.dart';
+
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  final usersProductsStream = StreamController<List<String>>();
+
+  Future<void> fetchAndAddProducts() async {
+    try {
+      final products = await ProductDatabaseHelper()
+          .usersProductsList; // Fetch products using your Future method
+      usersProductsStream.add(products); // Add to the stream
+    } catch (e) {
+      print(e);
+      usersProductsStream.addError(e); // Handle any errors
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAndAddProducts(); // Fetch products on widget initialization
+  }
+
+  @override
+  void dispose() {
+    usersProductsStream.close(); // Close the stream when the widget is disposed
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: RefreshIndicator(
+        onRefresh: refreshPage,
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(screenPadding)),
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  SizedBox(height: getProportionateScreenHeight(20)),
+                  // Text("Your Products", style: headingStyle),
+                  Text(
+                    "Swipe LEFT to Edit, Swipe RIGHT to Delete",
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(30)),
+                  SizedBox(
+                    height: SizeConfig.screenHeight * 0.7,
+                    child: StreamBuilder<List<String>>(
+                      stream: usersProductsStream.stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          final productsIds = snapshot.data!;
+                          if (productsIds.length == 0) {
+                            return Center(
+                              child: NothingToShowContainer(
+                                secondaryMessage:
+                                    "Add your first Product to Sell",
+                              ),
+                            );
+                          }
+                          return ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            itemCount: productsIds.length,
+                            itemBuilder: (context, index) {
+                              //   print(productsIds[index]);
+                              return buildProductsCard(productsIds[index]);
+                            },
+                          );
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasError) {
+                          final error = snapshot.error;
+                          Logger().w(error.toString());
+                        }
+                        return Center(
+                          child: NothingToShowContainer(
+                            iconPath: "assets/icons/network_error.svg",
+                            primaryMessage: "Something went wrong",
+                            secondaryMessage: "Unable to connect to Database",
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(60)),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> refreshPage() {
+    return Future<void>.value();
+  }
+
+  Widget buildProductsCard(String productId) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: FutureBuilder<Product>(
+        future: ProductDatabaseHelper().getProductWithID(productId),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final product = snapshot.data!;
+            print(product);
+            return buildProductDismissible(product);
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            final error = snapshot.error.toString();
+            print(error);
+            Logger().e(error);
+          }
+          return Center(
+            child: Icon(
+              Icons.error,
+              color: kTextColor,
+              size: 60,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget buildProductDismissible(Product product) {
+    return Dismissible(
+      key: Key(product.id),
+      direction: DismissDirection.horizontal,
+      background: buildDismissibleSecondaryBackground(),
+      secondaryBackground: buildDismissiblePrimaryBackground(),
+      dismissThresholds: {
+        DismissDirection.endToStart: 0.65,
+        DismissDirection.startToEnd: 0.65,
+      },
+      child: ProductShortDetailCard(
+        productId: product.id,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductDetailsScreen(
+                productId: product.id,
+              ),
+            ),
+          );
+        },
+      ),
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.startToEnd) {
+          final confirmation = await showConfirmationDialog(
+              context, "Are you sure to Delete Product?");
+          if (confirmation) {
+            for (int i = 0; i < product.images!.length; i++) {
+              String path =
+                  ProductDatabaseHelper().getPathForProductImage(product.id, i);
+              final deletionFuture =
+                  FirestoreFilesAccess().deleteFileFromPath(path);
+              await showDialog(
+                context: context,
+                builder: (context) {
+                  return AsyncProgressDialog(
+                    deletionFuture,
+                    message: Text(
+                        "Deleting Product Images ${i + 1}/${product.images!.length}"),
+                  );
+                },
+              );
+            }
+
+            bool productInfoDeleted = false;
+            String snackbarMessage = "a";
+            try {
+              final deleteProductFuture =
+                  ProductDatabaseHelper().deleteUserProduct(product.id);
+              productInfoDeleted = await showDialog(
+                context: context,
+                builder: (context) {
+                  return AsyncProgressDialog(
+                    deleteProductFuture,
+                    message: Text("Deleting Product"),
+                  );
+                },
+              );
+              if (productInfoDeleted == true) {
+                snackbarMessage = "Product deleted successfully";
+              } else {
+                throw "Coulnd't delete product, please retry";
+              }
+            } on FirebaseException catch (e) {
+              Logger().w("Firebase Exception: $e");
+              snackbarMessage = "Something went wrong";
+            } catch (e) {
+              Logger().w("Unknown Exception: $e");
+              snackbarMessage = e.toString();
+            } finally {
+              Logger().i(snackbarMessage);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(snackbarMessage),
+                ),
+              );
+            }
+          }
+          await refreshPage();
+          return confirmation;
+        } else if (direction == DismissDirection.endToStart) {
+          final confirmation = await showConfirmationDialog(
+              context, "Are you sure to Edit Product?");
+          if (confirmation) {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditProductScreen(
+                  productToEdit: product,
+                ),
+              ),
+            );
+          }
+          await refreshPage();
+          return false;
+        }
+        return false;
+      },
+      onDismissed: (direction) async {
+        await refreshPage();
+      },
+    );
+  }
+
+  Widget buildDismissiblePrimaryBackground() {
+    return Container(
+      padding: EdgeInsets.only(right: 20),
+      decoration: BoxDecoration(
+        color: Colors.green,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Icon(
+            Icons.edit,
+            color: Colors.white,
+          ),
+          SizedBox(width: 4),
+          Text(
+            "Edit",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildDismissibleSecondaryBackground() {
+    return Container(
+      padding: EdgeInsets.only(left: 20),
+      decoration: BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            "Delete",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+          SizedBox(width: 4),
+          Icon(
+            Icons.delete,
+            color: Colors.white,
+          ),
+        ],
+      ),
+    );
+  }
+}
